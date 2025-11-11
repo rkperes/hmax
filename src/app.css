@@ -3,7 +3,11 @@
 @import "tailwindcss/utilities";
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-gray text-black antialiased;
+	}
 }

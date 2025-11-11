@@ -6,6 +6,7 @@
 	let robustezVisible = false;
 	let versatilidadeVisible = false;
 	let amplitudeVisible = false;
+	let mobileMenuOpen = false;
 
 	onMount(() => {
 		const observer = new IntersectionObserver(
@@ -30,16 +31,26 @@
 
 		return () => observer.disconnect();
 	});
+
+	function toggleMobileMenu() {
+		mobileMenuOpen = !mobileMenuOpen;
+	}
+
+	function closeMobileMenu() {
+		mobileMenuOpen = false;
+	}
 </script>
 
 <!-- Navigation Header -->
 <header
-	class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray/20"
+	class="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-gray/20"
 >
 	<nav class="container mx-auto px-6 py-4 flex items-center justify-between">
 		<div class="flex items-center space-x-2">
-			<img src="/logo_long1.svg" alt="HYDROMAX" class="h-8" />
+			<img src="/logo_long1.svg" alt="HYDROMAX" class="h-4" />
 		</div>
+
+		<!-- Desktop Navigation -->
 		<div class="hidden md:flex space-x-8">
 			<a href="#hero" class="text-gray hover:text-white transition-colors"
 				>Home</a
@@ -59,150 +70,110 @@
 				>Amplitude</a
 			>
 		</div>
+
+		<!-- Mobile Menu Button -->
+		<button
+			class="md:hidden text-white hover:text-blue transition-colors"
+			onclick={toggleMobileMenu}
+			aria-label="Toggle menu"
+		>
+			<svg
+				class="w-6 h-6"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				{#if mobileMenuOpen}
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M6 18L18 6M6 6l12 12"
+					/>
+				{:else}
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M4 6h16M4 12h16M4 18h16"
+					/>
+				{/if}
+			</svg>
+		</button>
 	</nav>
 </header>
 
-<!-- Hero Section -->
-<section
-	id="hero"
-	class="min-h-screen bg-black relative overflow-hidden flex items-center justify-center"
->
-	<!-- Background geometric overlay -->
-	<div class="absolute inset-0 opacity-10">
-		<div
-			class="absolute top-20 left-20 w-32 h-32 border-4 border-blue transform rotate-45"
-		></div>
-		<div
-			class="absolute bottom-20 right-20 w-48 h-48 border-4 border-blue rounded-full"
-		></div>
-		<div
-			class="absolute top-1/2 left-1/3 w-64 h-1 bg-blue transform rotate-12"
-		></div>
-	</div>
+<!-- Mobile Side Panel -->
+{#if mobileMenuOpen}
+	<div class="fixed inset-0 z-40 md:hidden" onclick={closeMobileMenu}>
+		<!-- Backdrop -->
+		<div class="absolute inset-0 bg-black/50"></div>
 
-	<div class="container mx-auto px-6 text-center relative z-10">
-		<div in:fly={{ y: -50, duration: 800 }} out:fade>
-			<h1
-				class="text-6xl md:text-7xl font-bold font-space-grotesk text-white mb-6"
-			>
-				Elevando Seus
-				<span class="text-blue"> Projetos</span>
-			</h1>
-			<p class="text-xl md:text-2xl text-gray mb-8 max-w-3xl mx-auto">
-				Soluções robustas, versáteis e abrangentes para a indústria de
-				guindastes
-			</p>
-			<button
-				class="bg-blue hover:bg-blue/90 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform hover:scale-105"
-			>
-				Conheça Nossas Soluções
-			</button>
-		</div>
-	</div>
-</section>
-
-<!-- Robustez Section -->
-<section id="robustez" class="min-h-screen bg-black relative overflow-hidden">
-	<!-- Angular hexagon background motif -->
-	<div class="absolute inset-0 opacity-5">
-		<svg class="w-full h-full" viewBox="0 0 1200 800">
-			<polygon
-				points="600,100 800,250 800,450 600,600 400,450 400,250"
-				fill="none"
-				stroke="#3AA8C1"
-				stroke-width="2"
-			/>
-			<polygon
-				points="200,200 300,280 300,440 200,520 100,440 100,280"
-				fill="none"
-				stroke="#3AA8C1"
-				stroke-width="1"
-			/>
-			<polygon
-				points="1000,300 1100,380 1100,540 1000,620 900,540 900,380"
-				fill="none"
-				stroke="#3AA8C1"
-				stroke-width="1"
-			/>
-		</svg>
-	</div>
-
-	<div class="container mx-auto px-6 py-20 relative z-10">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div in:fly={{ x: -100, duration: 800 }} when={robustezVisible}>
-				<h2
-					class="text-5xl md:text-6xl font-bold font-space-grotesk text-white mb-6"
+		<!-- Side Panel -->
+		<div
+			class="absolute right-0 top-0 h-full w-64 border-l border-gray/20 transform transition-transform duration-300 ease-in-out"
+			onclick={(e) => e.stopPropagation()}
+		>
+			<div class="p-6">
+				<!-- Close Button -->
+				<button
+					class="absolute top-6 right-6 text-white hover:text-blue transition-colors"
+					onclick={closeMobileMenu}
+					aria-label="Close menu"
 				>
-					Robustez
-					<span class="text-blue">.</span>
-				</h2>
-				<p class="text-lg text-gray mb-8 leading-relaxed">
-					Nossas soluções são construídas com os mais altos padrões de
-					engenharia, garantindo durabilidade e confiabilidade
-					extremas em todas as condições de operação.
-				</p>
-				<div class="space-y-4">
-					<div class="flex items-center space-x-3">
-						<div
-							class="w-12 h-12 bg-blue/20 rounded-lg flex items-center justify-center"
-						>
-							<div class="w-6 h-6 bg-blue rounded-sm"></div>
-						</div>
-						<span class="text-white"
-							>Estrutura reforçada de alta resistência</span
-						>
-					</div>
-					<div class="flex items-center space-x-3">
-						<div
-							class="w-12 h-12 bg-blue/20 rounded-lg flex items-center justify-center"
-						>
-							<div class="w-6 h-6 bg-blue rounded-sm"></div>
-						</div>
-						<span class="text-white"
-							>Materiais premium e certificados</span
-						>
-					</div>
-					<div class="flex items-center space-x-3">
-						<div
-							class="w-12 h-12 bg-blue/20 rounded-lg flex items-center justify-center"
-						>
-							<div class="w-6 h-6 bg-blue rounded-sm"></div>
-						</div>
-						<span class="text-white"
-							>Testados nas condições mais extremas</span
-						>
-					</div>
-				</div>
-			</div>
-			<div
-				in:fly={{ x: 100, duration: 800 }}
-				when={robustezVisible}
-				class="relative"
-			>
-				<div
-					class="w-full h-96 bg-gray/10 rounded-lg relative overflow-hidden"
-				>
-					<div
-						class="absolute inset-0 bg-gradient-to-br from-blue/20 to-transparent"
-					></div>
-					<div
-						class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+					<svg
+						class="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
 					>
-						<div
-							class="w-32 h-32 border-4 border-blue transform rotate-45"
-						></div>
-					</div>
-				</div>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					</svg>
+				</button>
+
+				<!-- Navigation Links -->
+				<nav class="mt-12 space-y-6">
+					<a
+						href="#hero"
+						class="block text-lg text-gray hover:text-white transition-colors"
+						onclick={closeMobileMenu}
+					>
+						Home
+					</a>
+					<a
+						href="#robustez"
+						class="block text-lg text-gray hover:text-white transition-colors"
+						onclick={closeMobileMenu}
+					>
+						Robustez
+					</a>
+					<a
+						href="#versatilidade"
+						class="block text-lg text-gray hover:text-white transition-colors"
+						onclick={closeMobileMenu}
+					>
+						Versatilidade
+					</a>
+					<a
+						href="#amplitude"
+						class="block text-lg text-gray hover:text-white transition-colors"
+						onclick={closeMobileMenu}
+					>
+						Amplitude
+					</a>
+				</nav>
 			</div>
 		</div>
 	</div>
-</section>
+{/if}
 
 <!-- Versatilidade Section -->
-<section
-	id="versatilidade"
-	class="min-h-screen bg-black relative overflow-hidden"
->
+<section id="versatilidade" class="min-h-screen relative overflow-hidden">
 	<!-- Asymmetric flexible shapes background -->
 	<div class="absolute inset-0 opacity-5">
 		<svg class="w-full h-full" viewBox="0 0 1200 800">
@@ -223,92 +194,88 @@
 
 	<div class="container mx-auto px-6 py-20 relative z-10">
 		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<div
-				in:fly={{ x: -100, duration: 800 }}
-				when={versatilidadeVisible}
-				class="order-2 md:order-1 relative"
-			>
+			{#if versatilidadeVisible}
 				<div
-					class="w-full h-96 bg-gray/10 rounded-lg relative overflow-hidden"
+					in:fly={{ x: -100, duration: 800 }}
+					class="order-2 md:order-1 relative"
 				>
 					<div
-						class="absolute inset-0 bg-gradient-to-tr from-blue/20 to-transparent"
-					></div>
-					<div
-						class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+						class="w-full h-96 bg-gray/10 rounded-lg relative overflow-hidden"
 					>
-						<svg class="w-48 h-48" viewBox="0 0 200 200">
-							<path
-								d="M50,50 Q150,30 150,100 T50,150 Q30,100 50,50"
-								fill="none"
-								stroke="#3AA8C1"
-								stroke-width="3"
-							/>
-						</svg>
+						<div
+							class="absolute inset-0 bg-gradient-to-tr from-blue/20 to-transparent"
+						></div>
+						<div
+							class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+						>
+							<svg class="w-48 h-48" viewBox="0 0 200 200">
+								<path
+									d="M50,50 Q150,30 150,100 T50,150 Q30,100 50,50"
+									fill="none"
+									stroke="#3AA8C1"
+									stroke-width="3"
+								/>
+							</svg>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div
-				in:fly={{ x: 100, duration: 800 }}
-				when={versatilidadeVisible}
-				class="order-1 md:order-2"
-			>
-				<h2
-					class="text-5xl md:text-6xl font-bold font-space-grotesk text-white mb-6"
+			{/if}
+			{#if versatilidadeVisible}
+				<div
+					in:fly={{ x: 100, duration: 800 }}
+					class="order-1 md:order-2"
 				>
-					Versatilidade
-					<span class="text-blue">.</span>
-				</h2>
-				<p class="text-lg text-gray mb-8 leading-relaxed">
-					Adaptamos nossas soluções para atender às necessidades
-					específicas de cada projeto, oferecendo flexibilidade máxima
-					sem comprometer a performance.
-				</p>
-				<div class="space-y-4">
-					<div class="flex items-center space-x-3">
-						<div
-							class="w-12 h-12 bg-blue/20 rounded-full flex items-center justify-center"
-						>
+					<h2
+						class="text-5xl md:text-6xl font-bold font-space-grotesk mb-6"
+					>
+						Versatilidade
+						<span class="text-blue">.</span>
+					</h2>
+					<p class="text-lg mb-8 leading-relaxed">
+						Adaptamos nossas soluções para atender às necessidades
+						específicas de cada projeto, oferecendo flexibilidade
+						máxima sem comprometer a performance.
+					</p>
+					<div class="space-y-4">
+						<div class="flex items-center space-x-3">
 							<div
-								class="w-6 h-6 bg-blue rounded-full transform rotate-45"
-							></div>
+								class="w-12 h-12 bg-blue/20 rounded-full flex items-center justify-center"
+							>
+								<div
+									class="w-6 h-6 bg-blue rounded-full transform rotate-45"
+								></div>
+							</div>
+							<span>Configurações personalizáveis</span>
 						</div>
-						<span class="text-white"
-							>Configurações personalizáveis</span
-						>
-					</div>
-					<div class="flex items-center space-x-3">
-						<div
-							class="w-12 h-12 bg-blue/20 rounded-full flex items-center justify-center"
-						>
+						<div class="flex items-center space-x-3">
 							<div
-								class="w-6 h-6 bg-blue rounded-full transform rotate-45"
-							></div>
+								class="w-12 h-12 bg-blue/20 rounded-full flex items-center justify-center"
+							>
+								<div
+									class="w-6 h-6 bg-blue rounded-full transform rotate-45"
+								></div>
+							</div>
+							<span>Múltiplas aplicações industriais</span>
 						</div>
-						<span class="text-white"
-							>Múltiplas aplicações industriais</span
-						>
-					</div>
-					<div class="flex items-center space-x-3">
-						<div
-							class="w-12 h-12 bg-blue/20 rounded-full flex items-center justify-center"
-						>
+						<div class="flex items-center space-x-3">
 							<div
-								class="w-6 h-6 bg-blue rounded-full transform rotate-45"
-							></div>
+								class="w-12 h-12 bg-blue/20 rounded-full flex items-center justify-center"
+							>
+								<div
+									class="w-6 h-6 bg-blue rounded-full transform rotate-45"
+								></div>
+							</div>
+							<span>Soluções modulares e escaláveis</span>
 						</div>
-						<span class="text-white"
-							>Soluções modulares e escaláveis</span
-						>
 					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 	</div>
 </section>
 
 <!-- Amplitude Section -->
-<section id="amplitude" class="min-h-screen bg-black relative overflow-hidden">
+<section id="amplitude" class="min-h-screen relative overflow-hidden">
 	<!-- Wide horizontal elements background -->
 	<div class="absolute inset-0 opacity-5">
 		<div
@@ -326,83 +293,81 @@
 	</div>
 
 	<div class="container mx-auto px-6 py-20 relative z-10">
-		<div
-			in:fly={{ y: -50, duration: 800 }}
-			when={amplitudeVisible}
-			class="text-center mb-16"
-		>
-			<h2
-				class="text-5xl md:text-6xl font-bold font-space-grotesk text-white mb-6"
-			>
-				Amplitude
-				<span class="text-blue">.</span>
-			</h2>
-			<p class="text-xl text-gray max-w-4xl mx-auto leading-relaxed">
-				Cobertura completa para projetos de qualquer escala, desde
-				pequenas operações até grandes empreendimentos industriais, com
-				alcance nacional e capacidade ilimitada.
-			</p>
-		</div>
+		{#if amplitudeVisible}
+			<div in:fly={{ y: -50, duration: 800 }} class="text-center mb-16">
+				<h2
+					class="text-5xl md:text-6xl font-bold font-space-grotesk mb-6"
+				>
+					Amplitude
+					<span class="text-blue">.</span>
+				</h2>
+				<p class="text-xl max-w-4xl mx-auto leading-relaxed">
+					Cobertura completa para projetos de qualquer escala, desde
+					pequenas operações até grandes empreendimentos industriais,
+					com alcance nacional e capacidade ilimitada.
+				</p>
+			</div>
+		{/if}
 
 		<div class="grid md:grid-cols-3 gap-8">
-			<div
-				in:fly={{ y: 50, duration: 800, delay: 200 }}
-				when={amplitudeVisible}
-				class="text-center"
-			>
-				<div class="w-20 h-1 bg-blue mx-auto mb-6"></div>
-				<h3 class="text-2xl font-bold text-white mb-4">
-					Alcance Nacional
-				</h3>
-				<p class="text-gray">
-					Presença em todo o território brasileiro com equipes
-					especializadas
-				</p>
-			</div>
-			<div
-				in:fly={{ y: 50, duration: 800, delay: 400 }}
-				when={amplitudeVisible}
-				class="text-center"
-			>
-				<div class="w-20 h-1 bg-blue mx-auto mb-6"></div>
-				<h3 class="text-2xl font-bold text-white mb-4">
-					Capacidade Ilimitada
-				</h3>
-				<p class="text-gray">
-					Projetos de qualquer porte e complexidade com garantia de
-					execução
-				</p>
-			</div>
-			<div
-				in:fly={{ y: 50, duration: 800, delay: 600 }}
-				when={amplitudeVisible}
-				class="text-center"
-			>
-				<div class="w-20 h-1 bg-blue mx-auto mb-6"></div>
-				<h3 class="text-2xl font-bold text-white mb-4">
-					Soluções Completas
-				</h3>
-				<p class="text-gray">
-					Do planejamento à execução, cobrimos todas as etapas do
-					projeto
-				</p>
-			</div>
+			{#if amplitudeVisible}
+				<div
+					in:fly={{ y: 50, duration: 800, delay: 200 }}
+					class="text-center"
+				>
+					<div class="w-20 h-1 bg-blue mx-auto mb-6"></div>
+					<h3 class="text-2xl font-bold mb-4">Alcance Nacional</h3>
+					<p>
+						Presença em todo o território brasileiro com equipes
+						especializadas
+					</p>
+				</div>
+			{/if}
+			{#if amplitudeVisible}
+				<div
+					in:fly={{ y: 50, duration: 800, delay: 400 }}
+					class="text-center"
+				>
+					<div class="w-20 h-1 bg-blue mx-auto mb-6"></div>
+					<h3 class="text-2xl font-bold mb-4">
+						Capacidade Ilimitada
+					</h3>
+					<p>
+						Projetos de qualquer porte e complexidade com garantia
+						de execução
+					</p>
+				</div>
+			{/if}
+			{#if amplitudeVisible}
+				<div
+					in:fly={{ y: 50, duration: 800, delay: 600 }}
+					class="text-center"
+				>
+					<div class="w-20 h-1 bg-blue mx-auto mb-6"></div>
+					<h3 class="text-2xl font-bold mb-4">Soluções Completas</h3>
+					<p>
+						Do planejamento à execução, cobrimos todas as etapas do
+						projeto
+					</p>
+				</div>
+			{/if}
 		</div>
 
-		<div
-			in:fly={{ y: 50, duration: 800, delay: 800 }}
-			when={amplitudeVisible}
-			class="mt-16 text-center"
-		>
+		{#if amplitudeVisible}
 			<div
-				class="w-full h-0.5 bg-gradient-to-r from-transparent via-blue to-transparent mb-8"
-			></div>
-			<button
-				class="bg-blue hover:bg-blue/90 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform hover:scale-105"
+				in:fly={{ y: 50, duration: 800, delay: 800 }}
+				class="mt-16 text-center"
 			>
-				Entre em Contato
-			</button>
-		</div>
+				<div
+					class="w-full h-0.5 bg-gradient-to-r from-transparent via-blue to-transparent mb-8"
+				></div>
+				<button
+					class="bg-blue hover:bg-blue/90 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform hover:scale-105"
+				>
+					Entre em Contato
+				</button>
+			</div>
+		{/if}
 	</div>
 </section>
 

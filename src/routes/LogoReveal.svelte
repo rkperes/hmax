@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="fixed inset-0 bg-black z-50 flex items-center justify-center overflow-hidden
+	class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden
          transition-opacity duration-[500ms] ease-out"
 	class:opacity-0={showContent}
 	class:pointer-events-none={showContent}

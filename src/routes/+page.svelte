@@ -30,7 +30,6 @@
 <style>
 	:global(html) {
 		scroll-behavior: smooth;
-		background: #000;
 	}
 
 	.ease-hero {
