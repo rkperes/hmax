@@ -38,14 +38,7 @@
 >
 	<nav class="container mx-auto px-6 py-4 flex items-center justify-between">
 		<div class="flex items-center space-x-2">
-			<div
-				class="w-10 h-10 bg-blue rounded-lg flex items-center justify-center"
-			>
-				<span class="text-white font-bold text-xl">H</span>
-			</div>
-			<span class="text-white font-space-grotesk font-semibold"
-				>HYDROMAX</span
-			>
+			<img src="/logo_long1.svg" alt="HYDROMAX" class="h-8" />
 		</div>
 		<div class="hidden md:flex space-x-8">
 			<a href="#hero" class="text-gray hover:text-white transition-colors"
