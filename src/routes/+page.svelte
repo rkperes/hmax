@@ -26,13 +26,3 @@
 >
 	<Content />
 </div>
-
-<style>
-	:global(html) {
-		scroll-behavior: smooth;
-	}
-
-	.ease-hero {
-		transition-timing-function: cubic-bezier(1, 0.36, 0.71, 0.77);
-	}
-</style>
