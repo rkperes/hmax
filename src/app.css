@@ -8,6 +8,19 @@
 	}
 
 	body {
-		@apply bg-gray text-black antialiased;
+		@apply bg-white text-black antialiased;
+	}
+
+	.clip-diagonal-left {
+		clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+	}
+
+	.clip-diagonal-right {
+		clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+	}
+
+	.clip-rect-brand {
+		--corner: min(10vw, 50px);
+		clip-path: polygon(50px 0, 100% 0, 100% 100%, 0 100%, 0 50px);
 	}
 }

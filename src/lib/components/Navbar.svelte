@@ -21,14 +21,14 @@
 </script>
 
 <!-- Navigation Header -->
-<header class="sticky bg-gray top-0 left-0 right-0 z-50">
+<header class="static bg-white h-14 top-0 left-0 right-0 z-50">
 	<nav class="container mx-auto px-6 py-4 flex items-center justify-between">
 		<div class="flex items-center space-x-2">
-			<img src="/logo_long1.svg" alt="HYDROMAX" class="h-5" />
+			<img src="/logo_long1.svg" alt="HYDROMAX" class="h-4" />
 		</div>
 
 		<!-- Desktop Navigation -->
-		<div class="hidden md:flex space-x-8">
+		<div class="hidden md:flex space-x-8 h-6">
 			{#each navItems as i}
 				<a
 					href={i.href}
@@ -40,15 +40,26 @@
 		</div>
 
 		<!-- Mobile Menu Button -->
-		<div class="md:hidden text-black hover:text-blue-200 transition-colors">
-			<Hamburger bind:open type="spring" --color="currentColor" />
+		<div
+			class="md:hidden text-black h-6 hover:text-blue-200 transition-colors align-middle"
+		>
+			<Hamburger
+				bind:open
+				type="spring"
+				--color="currentColor"
+				--padding="3px"
+				--layer-width="25px"
+				--layer-height="3px"
+				--layer-spacing="5px"
+				--border-radius="4px"
+			/>
 		</div>
 	</nav>
 </header>
 
 <!-- Mobile Side Panel -->
 <div
-	class="fixed inset-0 md:hidden z-40 mt-24 border-t border-t-black/20 transition-all duration-300 ease-in-out"
+	class="fixed inset-0 md:hidden z-40 mt-14 border-t border-t-black/20 transition-all duration-300 ease-in-out"
 	class:opacity-100={open}
 	class:opacity-0={!open}
 	class:pointer-events-none={!open}
@@ -63,7 +74,7 @@
 
 	<!-- Side Panel -->
 	<div
-		class="absolute right-0 top-0 h-full w-64 bg-gray transform transition-transform duration-300 ease-in-out"
+		class="absolute right-0 top-0 h-full w-64 bg-white transform transition-transform duration-300 ease-in-out"
 	>
 		<div class="p-6">
 			<nav class="space-y-6">

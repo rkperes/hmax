@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Content from "./Content.svelte";
+	import Hero from "./Hero.svelte";
 	import LogoReveal from "./LogoReveal.svelte";
 
 	// reveal effect
@@ -24,5 +25,6 @@
 	class="opacity-0 transition-opacity duration-[350ms] delay-[150ms] ease-hero"
 	class:opacity-100={showContent}
 >
+	<Hero />
 	<Content />
 </div>

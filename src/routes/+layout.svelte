@@ -5,8 +5,5 @@
 
 <div class="min-h-screen flex flex-col bg-surface text-text font-sans">
 	<Navbar />
-	<main class="flex-1">
-		<slot />
-	</main>
+	<slot />
 </div>
-
