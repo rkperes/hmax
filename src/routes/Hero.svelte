@@ -1,6 +1,6 @@
 <!-- Hero Section -->
 <section class="relative w-full overflow-hidden">
-	<div class="min-w-[500px] overflow-hidden">
+	<div class="w-full overflow-hidden">
 		<img
 			src="/images/hm_render_1.png"
 			alt="Crane"

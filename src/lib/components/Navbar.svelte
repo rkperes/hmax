@@ -21,7 +21,7 @@
 </script>
 
 <!-- Navigation Header -->
-<header class="static bg-white h-14 top-0 left-0 right-0 z-50">
+<header class="static bg-white h-14 top-0 left-0 right-0 z-40">
 	<nav class="container mx-auto px-6 py-4 flex items-center justify-between">
 		<div class="flex items-center space-x-2">
 			<img src="/logo_long1.svg" alt="HYDROMAX" class="h-4" />
