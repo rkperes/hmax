@@ -82,6 +82,7 @@
 					<a
 						href={i.href}
 						class="block text-lg hover:text-blue font-space-grotesk font-bold transition-colors"
+						on:click={close}
 					>
 						{i.label.toUpperCase()}
 					</a>
