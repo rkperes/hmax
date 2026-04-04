@@ -4,6 +4,8 @@ import (
 	"flag"
 	"log"
 	"net/http"
+
+	_ "github.com/stretchr/testify"
 )
 
 func main() {
