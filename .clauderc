@@ -1,0 +1,8 @@
+{
+  "interpreter": {
+    "preamble": "Always refer to the project documentation in ./agents/agents.md and the specific guidelines in ./agents/skills/ before suggesting code changes. You are working on a SQLite/Go/Remix/Bun stack."
+  },
+  "memory": {
+    "directory": "./agents/.memory"
+  }
+}
