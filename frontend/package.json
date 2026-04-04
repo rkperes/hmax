@@ -6,6 +6,7 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
+    "check": "biome check --write .",
     "typecheck": "react-router typegen && tsc",
     "docker:dev": "docker build -t hmax_frontend . && docker run -p 3000:3000 hmax_frontend"
   },
@@ -18,6 +19,7 @@
     "react-router": "7.14.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
     "@react-router/dev": "7.14.0",
     "@tailwindcss/vite": "^4.2.2",
     "@types/node": "^22",
