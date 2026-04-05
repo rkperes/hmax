@@ -15,7 +15,7 @@ primary_region = 'gru'
 
 [processes]
   api = '/app/backend/server'
-  web = 'bun run --cwd /app/frontend start'
+  web = 'node /app/frontend/node_modules/.bin/react-router-serve /app/frontend/build/server/index.js'
 
 [[services]]
   protocol = 'tcp'

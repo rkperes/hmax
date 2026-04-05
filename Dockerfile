@@ -21,12 +21,9 @@ RUN bun run build
 
 
 # ── Stage 3: Final runtime image ─────────────────────────────────────────────
-FROM debian:bookworm-slim
+FROM node:22-slim 
 
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
-
-# copy bun from build stage
-COPY --from=bun-builder /usr/local/bin/bun /usr/local/bin/bun
 
 WORKDIR /app
 

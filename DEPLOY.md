@@ -9,14 +9,14 @@ Internet
 [Fly proxy :443]
    │
    ▼
-[Remix/Bun :3000]  ←── public
+[React Router/Node :3000]  ←── public
    │  (localhost)
    ▼
 [Go server :8080]  ←── internal only
 ```
 
 Both processes run on the same VM. The Go backend is never exposed to the
-public internet — only reachable via localhost from Remix.
+public internet — only reachable via localhost from the frontend.
 
 ---
 
@@ -80,11 +80,11 @@ The Go server must:
 log.Fatal(http.ListenAndServe("127.0.0.1:8080", router))
 ```
 
-## Remix frontend requirements
+## React Router frontend requirements
 
-The Remix start script must listen on `0.0.0.0:3000` so Fly's proxy can reach it.
-Set `BACKEND_URL=http://localhost:8080` (already in fly.toml [env]) and use it
-in your loaders:
+The frontend runs on Node.js (built with Vite via react-router build). It listens on `0.0.0.0:3000`
+so Fly's proxy can reach it. Set `BACKEND_URL=http://localhost:8080` (already in fly.toml [env])
+and use it in your loaders:
 
 ```ts
 // app/utils/api.server.ts
@@ -93,6 +93,37 @@ const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:8080";
 export async function fetchFromAPI(path: string) {
   return fetch(`${BACKEND_URL}${path}`);
 }
+```
+
+---
+
+## Local Docker testing
+
+Build the image:
+
+```bash
+docker build -t hmax /path/to/project/root
+```
+
+Run the full app (both backend and frontend):
+
+```bash
+docker run --rm -p 3000:3000 hmax
+```
+
+The frontend will be at `http://localhost:3000` and will connect to the backend on `localhost:8080` (internal).
+
+Run just the frontend (if backend is running locally on port 8080):
+
+```bash
+docker run --rm -p 3000:3000 -e BACKEND_URL=http://localhost:8080 hmax \
+  node /app/frontend/node_modules/.bin/react-router-serve /app/frontend/build/server/index.js
+```
+
+Run just the backend:
+
+```bash
+docker run --rm -p 8080:8080 hmax /app/backend/server
 ```
 
 ---
