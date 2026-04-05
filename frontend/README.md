@@ -1,87 +1,115 @@
-# Welcome to React Router!
+# Frontend Architecture
 
-A modern, production-ready template for building full-stack React applications using React Router.
+This frontend uses React Router with a structured approach to organize code by concern. The directory structure follows best practices for maintainability and scalability.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
-
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
+## Directory Structure
 
 ```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+app/
+├── routes/                  # File-based routing - keep these thin
+│   ├── home.tsx            # Route components, minimal logic
+│   ├── about.tsx
+│   └── ...
+├── services/                # Server-side logic & API calls (*.server.ts)
+│   ├── hello.server.ts     # Loaders, actions, business logic
+│   ├── auth.server.ts
+│   └── ...
+├── components/              # Pure UI components (no data fetching)
+│   ├── Button.tsx
+│   └── ui/
+├── hooks/                   # Client-side custom hooks
+│   └── useOptimistic.ts
+├── utils/                   # Shared utilities
+│   ├── http.server.ts      # Server-side fetch wrapper
+│   ├── format.ts           # Formatting helpers
+│   └── ...
+└── types/                   # Shared TypeScript types
+    └── api.ts              # API response types
 ```
 
-## Styling
+## Key Principles
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+### Routes (`routes/*.tsx`)
+- **Keep them thin**: Routes should focus on rendering the UI
+- **Delegate data fetching**: Import loaders/services for data logic
+- **Minimal imports**: Only import the services you need
 
----
+```tsx
+import { useLoaderData } from "react-router";
+import { getSomeData } from "~/services/data.server";
 
-Built with ❤️ using React Router.
+export async function loader() {
+  return getSomeData();
+}
+
+export default function MyRoute() {
+  const data = useLoaderData<typeof loader>();
+  return <div>{data}</div>;
+}
+```
+
+### Services (`services/*.server.ts`)
+- **Server-only code**: Use the `.server.ts` suffix (enforced by bundler)
+- **API communication**: Handle all fetch calls to the backend
+- **Business logic**: Loaders, actions, data transformations
+- **Reusable**: Services can be called from multiple routes/actions
+
+```ts
+import { apiFetch } from "~/utils/http.server";
+
+export async function getHelloMessage() {
+  return apiFetch("/api/hello");
+}
+```
+
+### Utils (`utils/`)
+- `http.server.ts`: Centralized fetch wrapper with error handling
+- Other utilities: Date formatting, string helpers, etc.
+
+### Types (`types/`)
+- API response types
+- Domain types
+- Shared interfaces
+
+## Data Fetching Pattern
+
+All data fetching happens in **loaders** (server-side, before rendering):
+
+```tsx
+// ✅ Good: Data loaded before component renders
+export async function loader() {
+  const data = await getHelloMessage();
+  return { message: data.message };
+}
+
+export default function Home() {
+  const { message } = useLoaderData<typeof loader>();
+  return <p>{message}</p>;
+}
+```
+
+Avoid client-side fetching with `useEffect`:
+
+```tsx
+// ❌ Avoid: Loading state, waterfalls, complexity
+useEffect(() => {
+  fetch("/api/hello").then(setData);
+}, []);
+```
+
+## Environment Variables
+
+Configure the API URL via environment variables:
+
+```sh
+# .env
+API_URL=http://localhost:8080
+```
+
+The `http.server.ts` utility will use `API_URL` or default to `http://localhost:8080`.
+
+## File Naming
+
+- `*.server.ts` - Server-only code (loaders, actions, services)
+- `*.tsx` - React components
+- `*.ts` - Utilities, types, helpers
