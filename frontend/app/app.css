@@ -70,7 +70,12 @@ body {
    2. TYPOGRAPHY
    ============================================================================ */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-bold tracking-tight;
 }
 
@@ -104,7 +109,8 @@ p {
   @apply leading-relaxed;
 }
 
-strong, b {
+strong,
+b {
   @apply font-semibold;
 }
 
@@ -128,7 +134,8 @@ a {
   }
 }
 
-button, [role="button"] {
+button,
+[role="button"] {
   @apply font-medium transition-all duration-150 cursor-pointer;
 
   &:focus-visible {
@@ -147,7 +154,9 @@ button, [role="button"] {
    4. FORM ELEMENTS
    ============================================================================ */
 
-input, textarea, select {
+input,
+textarea,
+select {
   @apply bg-hydromax-dark-800 text-hydromax-light border border-hydromax-dark-600 rounded px-3 py-2 font-sans text-base transition-colors duration-150;
 
   &:focus {
@@ -290,11 +299,67 @@ input, textarea, select {
    ============================================================================ */
 
 .hero {
-  @apply relative min-h-screen flex items-center justify-center overflow-hidden;
-  background: linear-gradient(135deg, var(--color-base) 0%, #0d1d2b 100%);
+  @apply relative min-h-screen overflow-hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+  }
 
   h1 {
-    @apply max-w-3xl mx-auto;
+    @apply max-w-3xl;
+  }
+}
+
+.hero-left {
+  @apply flex flex-col justify-center relative;
+  grid-column: 1;
+  background: url('/images/hm_generic_v1.jpg') center / cover no-repeat;
+
+  @media (min-width: 1024px) {
+    @apply bg-hydromax-base;
+    background-image: none;
+  }
+
+  @media (max-width: 1023px) {
+    min-height: auto;
+
+    &::before {
+      content: "";
+      @apply absolute inset-0 bg-hydromax-base;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+  }
+
+  >div {
+    @apply relative z-10;
+
+    @media (max-width: 1023px) {
+      position: relative;
+    }
+  }
+}
+
+.hero-right {
+  @apply hidden;
+  grid-column: 2;
+  position: relative;
+
+  @media (min-width: 1024px) {
+    @apply block;
+    height: 100vh;
+  }
+
+  &::before {
+    content: "";
+    @apply absolute z-10 bg-hydromax-base;
+    inset: 0;
+    left: 0;
+    width: 20%;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    pointer-events: none;
   }
 }
 
