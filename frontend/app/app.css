@@ -1,1 +1,349 @@
-@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ============================================================================
+   HYDROMAX GLOBAL STYLESHEET
+   Landing Page + Institutional Website for Truck Crane Company
+   ============================================================================ */
+
+/* ============================================================================
+   1. BASE STYLES & TYPOGRAPHY
+   ============================================================================ */
+
+:root {
+  --color-base: #000000;
+  --color-hydro: #3AA8C1;
+  --color-max: #C4CBCF;
+  --color-light: #F9FAFB;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  @apply box-border;
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply bg-hydromax-base text-hydromax-max font-sans text-base leading-relaxed;
+  color: var(--color-max);
+  background-color: var(--color-base);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+/* ============================================================================
+   2. TYPOGRAPHY
+   ============================================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold tracking-tight;
+}
+
+h1 {
+  @apply text-5xl leading-tight;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  @apply text-4xl leading-tight;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  @apply text-3xl leading-snug;
+}
+
+h4 {
+  @apply text-2xl leading-snug;
+}
+
+h5 {
+  @apply text-xl leading-snug;
+}
+
+h6 {
+  @apply text-lg;
+}
+
+p {
+  @apply leading-relaxed;
+}
+
+strong, b {
+  @apply font-semibold;
+}
+
+/* ============================================================================
+   3. LINKS & INTERACTIVE ELEMENTS
+   ============================================================================ */
+
+a {
+  @apply text-hydromax-hydro transition-colors duration-150 hover:text-opacity-80;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+
+  &:focus-visible {
+    @apply outline-none;
+    outline: 2px solid var(--color-hydro);
+    outline-offset: 2px;
+  }
+}
+
+button, [role="button"] {
+  @apply font-medium transition-all duration-150 cursor-pointer;
+
+  &:focus-visible {
+    @apply outline-none;
+    outline: 2px solid var(--color-hydro);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+/* ============================================================================
+   4. FORM ELEMENTS
+   ============================================================================ */
+
+input, textarea, select {
+  @apply bg-hydromax-dark-800 text-hydromax-light border border-hydromax-dark-600 rounded px-3 py-2 font-sans text-base transition-colors duration-150;
+
+  &:focus {
+    @apply outline-none border-hydromax-hydro;
+    box-shadow: 0 0 0 3px rgba(58, 168, 193, 0.1);
+  }
+
+  &::placeholder {
+    @apply text-hydromax-dark-400;
+  }
+
+  &:disabled {
+    @apply bg-hydromax-dark-900 text-hydromax-dark-500 cursor-not-allowed;
+  }
+}
+
+/* ============================================================================
+   5. COMPONENT PATTERNS
+   ============================================================================ */
+
+/* Primary Button */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-hydromax-hydro text-hydromax-base font-semibold rounded transition-all duration-150;
+
+  &:hover:not(:disabled) {
+    @apply bg-opacity-90;
+  }
+
+  &:active:not(:disabled) {
+    @apply scale-95;
+  }
+}
+
+/* Secondary Button */
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 border-2 border-hydromax-hydro text-hydromax-hydro font-semibold rounded transition-all duration-150;
+
+  &:hover:not(:disabled) {
+    @apply bg-hydromax-hydro bg-opacity-10;
+  }
+
+  &:active:not(:disabled) {
+    @apply scale-95;
+  }
+}
+
+/* Ghost Button */
+.btn-ghost {
+  @apply inline-flex items-center justify-center px-6 py-3 text-hydromax-max font-semibold rounded transition-all duration-150;
+
+  &:hover:not(:disabled) {
+    @apply text-hydromax-light bg-hydromax-dark-800;
+  }
+
+  &:active:not(:disabled) {
+    @apply scale-95;
+  }
+}
+
+/* ============================================================================
+   6. BRAND GEOMETRIC SHAPES
+   ============================================================================ */
+
+/* Robustness — Solid perspective-skewed rectangular block */
+.shape-robustness {
+  @apply relative;
+
+  &::before {
+    content: "";
+    @apply absolute inset-0 bg-hydromax-hydro;
+    transform: perspective(600px) rotateY(-8deg) rotateX(4deg);
+    opacity: 0.15;
+  }
+}
+
+/* Versatility — Diagonal slash/parallelogram */
+.shape-versatility {
+  @apply relative overflow-hidden;
+
+  &::before {
+    content: "";
+    @apply absolute inset-0;
+    background: linear-gradient(135deg, transparent 35%, var(--color-hydro) 35%, var(--color-hydro) 40%, transparent 40%);
+    opacity: 0.2;
+  }
+}
+
+/* Amplitude — Logo symbol (interlocking angular brackets) */
+.shape-amplitude {
+  @apply inline-flex items-center justify-center;
+  position: relative;
+  width: 60px;
+  height: 60px;
+
+  &::before,
+  &::after {
+    content: "";
+    @apply absolute border-2 border-hydromax-hydro;
+  }
+
+  &::before {
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  &::after {
+    width: 70%;
+    height: 70%;
+    bottom: 15%;
+    right: 15%;
+    border-left: none;
+    border-top: none;
+  }
+}
+
+/* ============================================================================
+   7. LAYOUT UTILITIES
+   ============================================================================ */
+
+.container-gutter {
+  @apply px-6 sm:px-8 md:px-12 lg:px-16;
+}
+
+.section-spacing {
+  @apply py-16 sm:py-20 md:py-24 lg:py-32;
+}
+
+.grid-cols-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* ============================================================================
+   8. HERO & LANDING SECTIONS
+   ============================================================================ */
+
+.hero {
+  @apply relative min-h-screen flex items-center justify-center overflow-hidden;
+  background: linear-gradient(135deg, var(--color-base) 0%, #0d1d2b 100%);
+
+  h1 {
+    @apply max-w-3xl mx-auto;
+  }
+}
+
+.section-light {
+  @apply bg-hydromax-light text-hydromax-base;
+}
+
+.section-dark {
+  @apply bg-hydromax-base text-hydromax-max;
+}
+
+.section-accent {
+  @apply bg-hydromax-hydro text-hydromax-base;
+}
+
+/* ============================================================================
+   9. UTILITY & SUPPORT CLASSES
+   ============================================================================ */
+
+.text-hydro {
+  @apply text-hydromax-hydro;
+}
+
+.text-max {
+  @apply text-hydromax-max;
+}
+
+.bg-hydro {
+  @apply bg-hydromax-hydro;
+}
+
+.border-hydro {
+  @apply border-hydromax-hydro;
+}
+
+.accent-underline {
+  @apply relative pb-2;
+
+  &::after {
+    content: "";
+    @apply absolute bottom-0 left-0 h-1 bg-hydromax-hydro;
+    width: 40px;
+  }
+}
+
+/* Smooth fade-in for page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    animation: fadeIn 0.4s ease-in;
+  }
+}
+
+/* ============================================================================
+   10. RESPONSIVE & DARK MODE DEFAULTS
+   ============================================================================ */
+
+/* Force dark mode as default (brand primary) */
+@media (prefers-color-scheme: light) {
+  body {
+    @apply bg-hydromax-base text-hydromax-max;
+  }
+
+  a {
+    @apply text-hydromax-hydro;
+  }
+}
+
+/* Accessibility: Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    @apply !transition-none !animate-none;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  a {
+    @apply text-hydromax-hydro;
+    text-decoration: underline;
+  }
+}
