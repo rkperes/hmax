@@ -1,7 +1,33 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
+
+/* ============================================================================
+   TAILWIND v4 THEME CONFIGURATION
+   ============================================================================ */
+
+@theme {
+  --color-hydromax-base: #000000;
+  --color-hydromax-hydro: #3aa8c1;
+  --color-hydromax-max: #c4cbcf;
+  --color-hydromax-light: #f9fafb;
+
+  --color-hydromax-dark-50: #f7f8f9;
+  --color-hydromax-dark-100: #e8eaec;
+  --color-hydromax-dark-200: #d1d5d9;
+  --color-hydromax-dark-300: #babfc6;
+  --color-hydromax-dark-400: #a3a9b3;
+  --color-hydromax-dark-500: #8c93a0;
+  --color-hydromax-dark-600: #6b7280;
+  --color-hydromax-dark-700: #4a5568;
+  --color-hydromax-dark-800: #2d3748;
+  --color-hydromax-dark-900: #1a202c;
+
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-grotesk: "Space Grotesk", system-ui, sans-serif;
+
+  --spacing-gutter: 24px;
+  --spacing-section: 64px;
+}
 
 /* ============================================================================
    HYDROMAX GLOBAL STYLESHEET
@@ -85,9 +111,13 @@ strong, b {
    ============================================================================ */
 
 a {
-  @apply text-hydromax-hydro transition-colors duration-150 hover:text-opacity-80;
+  @apply text-hydromax-hydro transition-colors duration-150;
   text-decoration: underline;
   text-underline-offset: 4px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   &:focus-visible {
     @apply outline-none;
@@ -106,7 +136,8 @@ button, [role="button"] {
   }
 
   &:disabled {
-    @apply opacity-50 cursor-not-allowed;
+    @apply cursor-not-allowed;
+    opacity: 0.5;
   }
 }
 
@@ -140,7 +171,7 @@ input, textarea, select {
   @apply inline-flex items-center justify-center px-6 py-3 bg-hydromax-hydro text-hydromax-base font-semibold rounded transition-all duration-150;
 
   &:hover:not(:disabled) {
-    @apply bg-opacity-90;
+    opacity: 0.9;
   }
 
   &:active:not(:disabled) {
@@ -153,7 +184,7 @@ input, textarea, select {
   @apply inline-flex items-center justify-center px-6 py-3 border-2 border-hydromax-hydro text-hydromax-hydro font-semibold rounded transition-all duration-150;
 
   &:hover:not(:disabled) {
-    @apply bg-hydromax-hydro bg-opacity-10;
+    background-color: rgb(58 168 193 / 0.1);
   }
 
   &:active:not(:disabled) {
