@@ -24,12 +24,12 @@ export function Header() {
             : "bg-transparent"
         }`}
       >
-        <nav className="container-gutter py-4 flex items-center justify-between">
+        <nav className="container-gutter py-4 flex items-center justify-between gap-8">
           {/* Logo */}
-          <Logo size="md" variant="dark-bg" linkTo="/" />
+          <Logo variant="full" size="md" linkTo="/" />
 
-          {/* Desktop Nav Links - hidden on mobile */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav Links - hidden on tablet and below */}
+          <div className="hidden lg:flex items-center gap-8">
             <a
               href="#produtos"
               className="text-sm font-medium text-hydromax-max hover:text-hydromax-hydro transition-colors"
@@ -56,8 +56,8 @@ export function Header() {
             </a>
           </div>
 
-          {/* Desktop Language Switcher and CTA - hidden on mobile */}
-          <div className="hidden md:flex items-center gap-6">
+          {/* Desktop Language Switcher and CTA - hidden on tablet and below */}
+          <div className="hidden lg:flex items-center gap-6">
             <div className="flex items-center gap-2 text-xs font-semibold">
               <button className="text-hydromax-hydro">PT</button>
               <span className="text-hydromax-dark-600">/</span>
@@ -74,10 +74,10 @@ export function Header() {
             </a>
           </div>
 
-          {/* Mobile Menu Button - visible only on mobile */}
+          {/* Mobile Menu Button - visible on tablet and below */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden flex flex-col gap-1.5 p-2"
+            className="lg:hidden flex flex-col gap-1.5 p-2"
             aria-label="Toggle menu"
           >
             <span

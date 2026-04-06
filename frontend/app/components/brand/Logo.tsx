@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 interface LogoProps {
-  variant?: "dark-bg" | "light-bg";
+  variant?: "dark-bg" | "light-bg" | "full";
   size?: "sm" | "md" | "lg";
   linkTo?: string;
 }
@@ -11,6 +11,30 @@ export function Logo({
   size = "md",
   linkTo = "/",
 }: LogoProps) {
+  // Full logo lockup with wordmark (for header)
+  if (variant === "full") {
+    const sizeClasses = {
+      sm: "h-5",
+      md: "h-6 lg:h-7",
+      lg: "h-8",
+    };
+
+    const content = (
+      <img
+        src="/logo_long2.svg"
+        alt="Hydromax"
+        className={`${sizeClasses[size]} w-auto flex-shrink-0`}
+      />
+    );
+
+    if (linkTo) {
+      return <Link to={linkTo}>{content}</Link>;
+    }
+
+    return content;
+  }
+
+  // Symbol only (for footer or compact usage)
   const sizeClasses = {
     sm: "gap-2",
     md: "gap-3",
